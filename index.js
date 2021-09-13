@@ -1,51 +1,55 @@
-const testService = (data) => {
+const testService = (arr) => {
+  const objFromArr = Object.fromEntries(arr);
+  
+  const meaning = Object.values(objFromArr);
+  
+  const chim = meaning.every(value => value === 'out');
+  
+  // Переменная, в которой хранится, что порядок входа выхода пользователя корректный
+  const isCorrectInOut = chim;
+  // Переменная в которой хранятся данные, что все пользователи вышли
+  const isAllUsersOut = Number.isInteger(arr.length / 2);
+  
+  return isCorrectInOut && isAllUsersOut;
+};
 
-    let arr = data.slice()
-    let meaning = [];
-    let type = []
-
-    const objFromArr = Object.fromEntries(arr);
-
-    arr.forEach((i) => {
-        type.push(i[1])
-    })
-
-    for (let value of Object.values(objFromArr)) {
-        meaning.push(value);
-    }
-
-    const check = (value) => {
-        return value === 'out'
-    }
-
-    const chim = meaning.every(check);
-
-    if (chim === true) {
-        if (Number.isInteger(type.length / 2)) {
-            alert(true);
-        } else {
-            alert(false);
-        }
+/*
+function testService (events) {
+  // Пользыватели, которые в магазине
+  const inShop = new Set();
+  
+  for(const [user, event] of events) {
+    const userNowInShow = inShop.has(user);
+    
+    // Вышел неизвестный
+    const outUnknowUser = event === 'out' && !userNowInShow;
+    // Вошел 2 раза
+    const inTwoTimes = event === 'in' && userNowInShow;
+    
+    if(outUnknowUser || inTwoTimes) return false;
+    
+    if(event === 'out') {
+      inShop.delete(user);
+    } else if(event === 'in') {
+      inShop.add(user);
     } else {
-        alert(false);
+      return false;
     }
+  }
+  
+  // Никого не осталось в магазине
+  return !inShop.size;
 }
-
-
+*/
 
 // True
 
 const result = testService([
-    ['Pavel', 'in'],
-    ['Vova', 'in'],
-    ['Pavel', 'out'],
-    ['Dmitriy', 'in'],
-    ['Vova', 'out'],
-    ['Pavel', 'in'],
-    ['Dmitriy', 'out'],
-    ['Pavel', 'out'],
+  ['Pavel', 'in'],
+  ['Vova', 'in'],
+  ['Pavel', 'out'],
+  ['Dmitriy', 'in']
 ]);
-
 // Закрылось с посетителями
 
 // const result = testService([
